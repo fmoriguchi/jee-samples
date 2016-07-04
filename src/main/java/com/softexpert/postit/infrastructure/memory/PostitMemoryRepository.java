@@ -10,18 +10,20 @@ import java.util.Map;
 import java.util.Random;
 import java.util.logging.Logger;
 
-import javax.enterprise.inject.Default;
+import javax.enterprise.inject.Any;
 
 import com.softexpert.postit.domain.DuplicatePostitException;
 import com.softexpert.postit.domain.Postit;
 import com.softexpert.postit.domain.PostitRepository;
+import com.softexpert.postit.domain.StorePostitException;
 
 /**
  * @author fabio.moriguchi
  *
  */
-@Default
+//@Default
 //@ApplicationScoped
+@Any
 public final class PostitMemoryRepository implements PostitRepository {
 	
 	private static final Logger LOGGER = Logger.getLogger(PostitMemoryRepository.class.getName());
@@ -60,6 +62,12 @@ public final class PostitMemoryRepository implements PostitRepository {
 		POSTITS.remove(code);
 	}
 	
+
+	@Override
+	public Postit update(Postit postit) throws StorePostitException {
+		return POSTITS.put(postit.getCode(), postit);
+	}
+	
 	private static void createFakePostits() {
 		
 		try {
@@ -82,7 +90,7 @@ public final class PostitMemoryRepository implements PostitRepository {
 				}
 			}
 			
-		} catch (DuplicatePostitException e) {
+		} catch (Exception e) {
 
 		}
 	}

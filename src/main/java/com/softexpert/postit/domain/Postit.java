@@ -10,28 +10,44 @@ import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 /**
  * @author fabio.moriguchi
  *
  */
-@SuppressWarnings("serial")
+@Entity
 public class Postit implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private static final SimpleDateFormat FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 	
+	@Transient
 	private final Calendar created = Calendar.getInstance();
+	
+	@Id
+	//@GeneratedValue
 	private String code;
 	private String title;
 	private String comment;
 	private Integer point = 0;
 	private Status status = Status.TODO;
-	private final Collection<Postit> relateds = new ArrayList<>();
+	
+	@OneToMany(fetch=FetchType.EAGER)
+	private Collection<Postit> relateds = new ArrayList<>();
 	
 	/**
 	 * Nao utilizar, somente para auxiliar o parser do REST
 	 */
-	@SuppressWarnings("unused")
-	private Postit() {
+	Postit() {
 	
 	}
 

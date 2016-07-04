@@ -9,11 +9,13 @@ import java.util.Collection;
  */
 public interface PostitRepository {
 
-	Postit create(Postit postit) throws DuplicatePostitException;
+	Postit create(Postit postit) throws DuplicatePostitException, StorePostitException;
 	
 	Postit find(String code);
 	
 	void remove(String code);
 	
 	Collection<Postit> all();
+
+	Postit update(Postit postit) throws StorePostitException;
 }
