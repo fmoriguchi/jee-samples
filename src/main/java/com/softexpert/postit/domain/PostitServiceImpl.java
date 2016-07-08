@@ -7,6 +7,8 @@ import java.util.Collection;
 
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
 
 /**
  * @author fabio.moriguchi
@@ -19,6 +21,7 @@ public class PostitServiceImpl implements PostitService {
 	private PostitRepository repository;
 	
 	@Override
+	@Transactional(value=TxType.REQUIRED)
 	public Postit create(Postit postit) throws StorePostitException {
 		try {
 			return repository.create(postit);
@@ -58,5 +61,18 @@ public class PostitServiceImpl implements PostitService {
 
 	public final void setRepository(PostitRepository repository) {
 		this.repository = repository;
+	}
+
+	@Override
+	public Postit link(String linkCode, String toCode) throws StorePostitException {
+	
+		Postit linkPostit = this.repository.find(linkCode);
+		Postit toPostit = this.repository.find(toCode);
+		
+		toPostit.withRelated(linkPostit);
+		
+		this.repository.update(toPostit);
+
+		return linkPostit;
 	}
 }

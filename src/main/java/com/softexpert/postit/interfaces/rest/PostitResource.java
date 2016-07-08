@@ -26,8 +26,8 @@ import com.softexpert.postit.domain.StorePostitException;
  *
  */
 @Path("/postits")
-@Produces(MediaType.APPLICATION_JSON)
-@Consumes(MediaType.APPLICATION_JSON)
+@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 public class PostitResource {
 	
 	private static final String POSTIT_CODE = "code";
@@ -60,7 +60,6 @@ public class PostitResource {
 	@PUT
 	@Path("/{code}/next")
 	public Postit nextStatus(@PathParam(POSTIT_CODE) String postitCode) throws StorePostitException {
-	
 		return service.nextStatus(postitCode);
 	}
 	
@@ -68,5 +67,19 @@ public class PostitResource {
 	@Path("/{code}/previous")
 	public Postit previousStatus(@PathParam(POSTIT_CODE) String postitCode) throws StorePostitException {
 		return this.service.previousStatus(postitCode);
+	}
+	
+	@PUT
+	@Path("/{linkCode}/link/{toCode}")
+	public Postit link(@PathParam("linkCode") String linkCode, @PathParam("toCode") String toCode) throws StorePostitException {
+		return this.service.link(linkCode, toCode);
+	}
+
+	@GET
+	@Path("/fake")
+	public Postit fake() {
+		
+		Postit fake = new Postit("FRAM-6666", "Exemplo de um postit", "Esse é somente um exemplo de JSON para o postit");
+		return fake;
 	}
 }

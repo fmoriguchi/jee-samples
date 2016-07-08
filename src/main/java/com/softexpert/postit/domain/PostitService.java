@@ -17,6 +17,8 @@ public interface PostitService {
 	
 	Postit previousStatus(String postitCode) throws StorePostitException;
 	
+	Postit link(String linkCode, String toCode) throws StorePostitException;
+	
 	void remove(String code);
 	
 	Collection<Postit> findAll();

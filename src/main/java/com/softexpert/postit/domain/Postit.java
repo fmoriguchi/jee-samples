@@ -15,12 +15,19 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author fabio.moriguchi
  *
  */
 @Entity
+//@Table
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.NONE)
 public class Postit implements Serializable {
 
 	/**
@@ -35,12 +42,18 @@ public class Postit implements Serializable {
 	
 	@Id
 	//@GeneratedValue
+	@XmlElement
 	private String code;
+	@XmlElement
 	private String title;
+	@XmlElement
 	private String comment;
+	@XmlElement
 	private Integer point = 0;
+	@XmlElement
 	private Status status = Status.TODO;
 	
+	@XmlElement
 	@OneToMany(fetch=FetchType.EAGER)
 	private Collection<Postit> relateds = new ArrayList<>();
 	
