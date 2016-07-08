@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -44,12 +45,18 @@ public class Postit implements Serializable {
 	//@GeneratedValue
 	@XmlElement
 	private String code;
+	
+	
 	@XmlElement
+	@NotNull
 	private String title;
+	
 	@XmlElement
 	private String comment;
+	
 	@XmlElement
 	private Integer point = 0;
+	
 	@XmlElement
 	private Status status = Status.TODO;
 	

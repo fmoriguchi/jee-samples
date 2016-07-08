@@ -17,7 +17,7 @@ public final class StorePostitException extends Exception {
 
 
 	public StorePostitException(Postit postit, Throwable exception) {
-		super(createMessage(postit), exception);
+		super(createMessage(postit, exception), exception);
 	}
 
 	public StorePostitException(Postit postit) {
@@ -25,8 +25,12 @@ public final class StorePostitException extends Exception {
 	}
 	
 	private static final String createMessage(Postit postit) {
-		
 		return "Eita, postit '" + postit.getCode() + "' nao pode ser persistido.";
 	}
+	
+	private static final String createMessage(Postit postit, Throwable throwable) {
+		return "Eita, postit '" + postit.getCode() + "' nao pode ser persistido. Motivo: " + throwable.getMessage();
+	}
+
 
 }

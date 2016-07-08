@@ -38,6 +38,7 @@ public class PostityDAORepository implements PostitRepository {
 		try {
 			
 			manager.persist(postit);
+			manager.flush();
 			return postit;
 		} catch (Exception e) {
 			throw new StorePostitException(postit, e);
